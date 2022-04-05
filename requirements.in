@@ -1,0 +1,6 @@
+# core dependencies
+opencv-python
+opencv-contrib-python
+
+# formatter
+black
