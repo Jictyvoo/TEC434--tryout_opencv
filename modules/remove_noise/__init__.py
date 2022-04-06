@@ -1,8 +1,8 @@
 from typing import Final
 
 import click
-from modules.median_average.average_method import AverageNoiseRemover
-from modules.median_average.median_method import MedianNoiseRemover
+from modules.remove_noise.average_method import AverageNoiseRemover
+from modules.remove_noise.median_method import MedianNoiseRemover
 
 AVERAGE: Final = "average"
 MEDIAN: Final = "median"

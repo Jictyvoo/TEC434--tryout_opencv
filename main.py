@@ -1,6 +1,6 @@
 import click
 
-from modules.median_average import remove_noise
+from modules.remove_noise import remove_noise
 
 
 @click.command()
