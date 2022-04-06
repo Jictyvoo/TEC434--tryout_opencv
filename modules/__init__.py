@@ -1,0 +1,6 @@
+from typing import Final
+
+from modules.remove_noise import remove_noise
+
+"""A tuple that contains all cli functions for every module"""
+MODULES_CLI: Final = [remove_noise]

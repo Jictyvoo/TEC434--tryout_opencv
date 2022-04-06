@@ -1,6 +1,6 @@
 import click
 
-from modules.remove_noise import remove_noise
+from modules import MODULES_CLI
 
 
 @click.command()
@@ -17,7 +17,9 @@ def cli_executor():
 
 if __name__ == "__main__":
     # Start to add all commands to the cli executor
-    for command in [hello, remove_noise]:
+    commands = [hello]
+    commands.extend(MODULES_CLI)
+    for command in commands:
         cli_executor.add_command(command)
 
     # Call and start the cli
