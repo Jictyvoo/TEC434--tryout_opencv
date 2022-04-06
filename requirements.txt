@@ -7,11 +7,14 @@
 black==22.3.0
     # via -r requirements.in
 click==8.1.2
-    # via black
+    # via
+    #   -r requirements.in
+    #   black
 mypy-extensions==0.4.3
     # via black
 numpy==1.22.3
     # via
+    #   -r requirements.in
     #   opencv-contrib-python
     #   opencv-python
 opencv-contrib-python==4.5.5.64

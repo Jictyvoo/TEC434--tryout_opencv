@@ -1,6 +1,10 @@
 # core dependencies
+numpy
 opencv-python
 opencv-contrib-python
+
+# extra dependencies
+click # cli
 
 # formatter
 black
