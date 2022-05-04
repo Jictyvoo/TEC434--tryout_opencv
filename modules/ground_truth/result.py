@@ -41,8 +41,8 @@ class GtResult:
     @positive.setter
     def positive(self, truefake: tuple[float]) -> None:
         self.__set_checker(truefake)
-        self._positive.truth = truefake[1]
-        self._positive.fake = truefake[0]
+        self._positive.truth = truefake[0]
+        self._positive.fake = truefake[1]
 
     @property
     def negative(self) -> tuple:
@@ -51,8 +51,8 @@ class GtResult:
     @negative.setter
     def negative(self, truefake: tuple[float]) -> None:
         self.__set_checker(truefake)
-        self._negative.truth = truefake[1]
-        self._negative.fake = truefake[0]
+        self._negative.truth = truefake[0]
+        self._negative.fake = truefake[1]
 
     def __repr__(self) -> str:
         return "%s(::)%s" % (self._positive, self._negative)
