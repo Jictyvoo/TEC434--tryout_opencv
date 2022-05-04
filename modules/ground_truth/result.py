@@ -2,24 +2,26 @@ from modules.ground_truth.exception import GtResultException
 
 
 class TrueFalse:
-    def __init__(self, name: str, truth: float, fake: float) -> None:
-        self.name = name
+    def __init__(self, is_positive: bool, truth: float, fake: float) -> None:
+        self.names = ("positive", "negative")
+        if not is_positive:
+            self.names = ("negative", "positive")
         self.truth = truth
         self.fake = fake
 
     def __repr__(self) -> str:
         return "`true %s`: %.2f; `false %s`: %.2f" % (
-            self.name,
+            self.names[0],
             self.truth,
-            self.name,
+            self.names[1],
             self.fake,
         )
 
 
 class GtResult:
     def __init__(self) -> None:
-        self._positive = TrueFalse("positive", 0, 0)
-        self._negative = TrueFalse("negative", 0, 0)
+        self._positive = TrueFalse(True, 0, 0)
+        self._negative = TrueFalse(False, 0, 0)
 
     @property
     def positive(self) -> tuple:
