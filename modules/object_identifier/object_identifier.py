@@ -1,19 +1,14 @@
-import hashlib
-
 import cv2 as cv
 import numpy as np
 from providers.image_repository_provider import ImageRepositoryProvider
+from utils.generators import output_filename
 
 
 class ObjectIdentifier(ImageRepositoryProvider):
-    def export_image(self, inputname: str, output_folder: str, image) -> None:
-        hash_filename = hashlib.md5(inputname.encode("utf-8")).hexdigest()
-        index = inputname.rindex("/")
-        filename = inputname[index + 1 :].replace(".", "")
-
+    def export_image(self, input_name: str, output_folder: str, image) -> None:
         self._image_exporter.save(
             output_folder,
-            filename + "_" + hash_filename[: int(len(hash_filename) / 2)] + ".png",
+            output_filename(input_name) + ".png",
             image,
         )
 
