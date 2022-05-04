@@ -1,7 +1,4 @@
-from typing import Final
-
 import click
-from modules.ground_truth.ground_truth import GroundTruth
 from modules.ground_truth.gt_calculator import GtCalculator
 from modules.object_identifier.object_identifier import ObjectIdentifier
 from repositories.image_loader_repository import ImageLoaderRepository

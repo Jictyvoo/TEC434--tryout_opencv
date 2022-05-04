@@ -1,7 +1,3 @@
-from cgitb import reset
-from unittest import result
-
-from modules import ground_truth
 from modules.ground_truth.gt_calculator import GtCalculator
 from providers.image_repository_provider import ImageRepositoryProvider
 
