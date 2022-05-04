@@ -51,3 +51,6 @@ class GtResult:
         self.__set_checker(truefake)
         self._negative.truth = truefake[1]
         self._negative.fake = truefake[0]
+
+    def __repr__(self) -> str:
+        return "%s(::)%s" % (self._positive, self._negative)

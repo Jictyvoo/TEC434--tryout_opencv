@@ -1,3 +1,6 @@
+from cgitb import reset
+from unittest import result
+
 from modules import ground_truth
 from modules.ground_truth.gt_calculator import GtCalculator
 from providers.image_repository_provider import ImageRepositoryProvider
@@ -15,6 +18,4 @@ class GroundTruth(ImageRepositoryProvider):
         calculator = GtCalculator(input_image, gt_image)
         result = calculator.calculate()
 
-        print("----------------------------")
-        print("Verdadeiro Positivo: %.2f\nFalso Negativo: %.2f" % result.positive)
-        print("Verdadeiro Negativo: %.2f\nFalso Positivo: %.2f" % result.negative)
+        print(str(result).replace("(::)", "\n"))
