@@ -28,7 +28,9 @@ class GtResult:
     def __set_checker(self, truefake: tuple[float]) -> None:
         assert len(truefake) == 2, "Please only provide two args"
         value_sum = truefake[0] + truefake[1]
-        if value_sum != 1 or value_sum != 100:
+        between_0_1 = value_sum >= 0 and value_sum <= 1
+        between_0_100_percent = value_sum >= 0 and value_sum <= 100
+        if not (between_0_1 or between_0_100_percent):
             raise GtResultException(
                 "The sum of positive and true and false values should be 100%%; Received: %.2f"
                 % value_sum
