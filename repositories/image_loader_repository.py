@@ -6,7 +6,9 @@ import cv2
 
 
 class ImageLoaderRepository:
-    def load(self, path: str) -> typing.Any:
+    def load(self, path: str, as_bw=False) -> typing.Any:
+        if as_bw:
+            return cv2.imread(path, cv2.IMREAD_GRAYSCALE)
         return cv2.imread(path)
 
     def load_all(self, path: str, file_extension: str = ".png") -> tuple:
