@@ -3,9 +3,6 @@ from typing import Final
 import click
 from modules.ground_truth.ground_truth import GroundTruth
 
-THRESHOLD: Final = "threshold"
-MEDIAN: Final = "median"
-
 
 @click.command()
 @click.argument("base")
