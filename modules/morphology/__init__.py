@@ -13,10 +13,10 @@ STRUCEL_RECT: Final = "rect"
 )
 @click.option("--struct_el", default=STRUCEL_CROSS, help="The structuring element")
 @click.option(
-    "--open_close", default="false", help="Enable the use of open and close algorithms"
+    "--open_close", default=False, help="Enable the use of open and close algorithms"
 )
 @click.argument("filename")
-def morph_op(filename: str, output: str, struct_el: str, open_close: str):
+def morph_op(filename: str, output: str, struct_el: str, open_close: bool):
     """
     A script that takes an image and apply a structuring element in it.
     Optional: Structuring Element, if not passed, it will use a default
@@ -30,9 +30,8 @@ def morph_op(filename: str, output: str, struct_el: str, open_close: str):
             % str((STRUCEL_CROSS, STRUCEL_RECT)),
         )
 
-    execute_open_close = open_close != "false"
     executor = ApplyStructuringElement(
-        execute_open_close=execute_open_close,
+        execute_open_close=open_close,
         is_rect_strel=struct_el == STRUCEL_RECT,
     )
 
