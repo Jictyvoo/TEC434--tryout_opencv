@@ -1,5 +1,3 @@
-from typing import Final
-
 import click
 from modules.ground_truth.ground_truth import GroundTruth
 
