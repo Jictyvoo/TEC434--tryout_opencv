@@ -1,4 +1,4 @@
-from typing import Any, Callable
+from typing import Callable, Union
 
 import cv2
 from modules.element_contours.contours import Contours
@@ -7,7 +7,9 @@ from utils.generators import output_filename
 
 
 class ElementContourExtractor(ImageRepositoryProvider):
-    def __init__(self, contour_finder: Callable[[Any], Contours]) -> None:
+    def __init__(
+        self, contour_finder: Callable[[cv2.Mat], Union[Contours, cv2.Mat]]
+    ) -> None:
         self.__contour_finder = contour_finder
         super().__init__()
 
@@ -26,6 +28,6 @@ class ElementContourExtractor(ImageRepositoryProvider):
     def execute(self, filename: str, output_folder: str) -> None:
         image = self._image_loader.load(filename)
 
-        contours = self.__contour_finder(image)
-        processedImage = self.__draw_contours(image, contours)
+        contours, filtered_image = self.__contour_finder(image)
+        processedImage = self.__draw_contours(filtered_image, contours)
         self.export_image(filename, output_folder, processedImage)
