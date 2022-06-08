@@ -1,6 +1,7 @@
 import cv2 as cv
 import numpy as np
 from providers.image_repository_provider import ImageRepositoryProvider
+from utils.cv_helpers import fill_holes
 from utils.generators import output_filename
 
 
@@ -11,15 +12,6 @@ class ObjectIdentifier(ImageRepositoryProvider):
             output_filename(input_name) + ".png",
             image,
         )
-
-    def fill_holes(self, src):
-        contours, hierarchy = cv.findContours(
-            src, cv.RETR_CCOMP, cv.CHAIN_APPROX_SIMPLE
-        )
-        dst = np.zeros(src.shape, np.uint8)
-        for index in range(len(contours)):
-            cv.drawContours(dst, contours, index, 255, -1, 8, hierarchy, 0)
-        return dst
 
     def execute(self, filename: str, output_path: str):
         loaded_image = self._image_loader.load(filename, True)
@@ -41,7 +33,7 @@ class ObjectIdentifier(ImageRepositoryProvider):
             cv.getStructuringElement(cv.MORPH_ELLIPSE, (11, 11)),
         )
 
-        image_result = self.fill_holes(morphology_image)
+        image_result = fill_holes(morphology_image)
 
         self.export_image(filename, output_path, image_result)
         return image_result

@@ -1,11 +1,11 @@
 import click
-from modules.color_segmentation.hsv_colors import HSVColors
+from modules.color_segmentation.hsv_colors import HSVColor, HSVColors
 from modules.color_segmentation.identify_color import IdentifyColor
 from modules.color_segmentation.intensity_range import IntensityRange
 
 
 def parseColorRange(color_range: str, light_color: bool) -> IntensityRange:
-    target_color: IntensityRange = HSVColors.Red.value
+    target_color: HSVColor = HSVColors.RED.value
     colors = color_range.split("-", 1)
     if len(colors) == 2:
         if colors[0].isnumeric() and colors[1].isnumeric():
@@ -23,14 +23,18 @@ def parseColorRange(color_range: str, light_color: bool) -> IntensityRange:
     else:
         # search for the color by its name
         if color_range.isnumeric():
-            target_color = IntensityRange(min=int(color_range), max=int(color_range))
+            target_color = HSVColor(
+                h=(int(color_range), int(color_range)), s=(0, 0), v=(0, 0)
+            )
         else:
             found_color = HSVColors.get(name=color_range)
             if found_color is not None:
                 target_color = found_color.value
             if light_color:
-                target_color = IntensityRange(
-                    min=target_color.min - 23, max=target_color.max
+                target_color = HSVColor(
+                    h=(target_color.h.min - 23, target_color.h.max),
+                    s=(target_color.s.min, target_color.s.max),
+                    v=(target_color.v.min, target_color.v.max),
                 )
     return target_color
 

@@ -22,9 +22,9 @@ def biggest_element(color_range: str, output: str, light_color: bool, filename: 
     """
 
     target_color = parseColorRange(color_range, light_color)
-    color_threshould = IdentifyColor()
+    color_threshold = IdentifyColor()
     algorithm = BiggestElementCalculator(
-        threshold_func=lambda image: color_threshould.segmentate(
+        threshold_func=lambda image: color_threshold.segmentate(
             image=image, color_range=target_color
         ),
         isModeTree=False,

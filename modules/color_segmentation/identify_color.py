@@ -1,8 +1,8 @@
 import cv2
 import numpy as np
-from cv2 import Mat
-from modules.color_segmentation.intensity_range import IntensityRange
+from modules.color_segmentation.hsv_colors import HSVColor
 from providers.image_repository_provider import ImageRepositoryProvider
+from utils.cv_helpers import fill_holes
 from utils.generators import output_filename
 
 
@@ -14,22 +14,20 @@ class IdentifyColor(ImageRepositoryProvider):
             image,
         )
 
-    def segmentate(self, image: Mat, color_range: IntensityRange) -> None:
+    def segmentate(self, image: cv2.Mat, color_range: HSVColor) -> cv2.Mat:
         frame_hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
 
         # show only the color in the range
-        lower_color = np.array([color_range.min, 25, 55])
-        upper_color = np.array([color_range.max, 255, 255])
+        lower_color = np.array(color_range.min)
+        upper_color = np.array(color_range.max)
         mask = cv2.inRange(frame_hsv, lower_color, upper_color)
 
         # show the result
-        result = cv2.bitwise_and(image, image, mask=mask)
+        result = cv2.bitwise_and(image, image, mask=fill_holes(mask))
 
         return result
 
-    def execute(
-        self, filename: str, color_range: IntensityRange, output_folder: str
-    ) -> None:
+    def execute(self, filename: str, color_range: HSVColor, output_folder: str) -> None:
         image = self._image_loader.load(filename)
         result = self.segmentate(image, color_range)
 
