@@ -1,7 +1,6 @@
 from typing import Any, Callable
 
 import cv2
-from cv2 import Mat
 from modules.element_contours.contours import Contours
 from providers.image_repository_provider import ImageRepositoryProvider
 from utils.generators import output_filename
@@ -12,14 +11,14 @@ class ElementContourExtractor(ImageRepositoryProvider):
         self.__contour_finder = contour_finder
         super().__init__()
 
-    def export_image(self, filename: str, output_folder: str, image: Mat) -> None:
+    def export_image(self, filename: str, output_folder: str, image: cv2.Mat) -> None:
         self._image_exporter.save(
             output_folder,
             output_filename(filename) + ".png",
             image,
         )
 
-    def __draw_contours(self, image: Mat, contours: Contours) -> Mat:
+    def __draw_contours(self, image: cv2.Mat, contours: Contours) -> cv2.Mat:
         # Extract image in given contours
         contours_image = cv2.drawContours(image, [contours.biggest], 0, (0, 255, 0), 3)
         return contours_image
