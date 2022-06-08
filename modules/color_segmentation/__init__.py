@@ -4,21 +4,7 @@ from modules.color_segmentation.identify_color import IdentifyColor
 from modules.color_segmentation.intensity_range import IntensityRange
 
 
-@click.command()
-@click.option(
-    "--color-range",
-    default="green",
-    help="The color range that will be recognized by the algorithm",
-)
-@click.option(
-    "--output", default="./output/", help="The output directory for processed image"
-)
-@click.option("--light-color", default=False, help="Enable the use of light color")
-@click.argument("filename")
-def color_segment(color_range: str, output: str, light_color: bool, filename: str):
-    """
-    A script that takes an image and segment it by color.
-    """
+def parseColorRange(color_range: str, light_color: bool) -> IntensityRange:
     target_color: IntensityRange = HSVColors.Red.value
     colors = color_range.split("-", 1)
     if len(colors) == 2:
@@ -46,6 +32,25 @@ def color_segment(color_range: str, output: str, light_color: bool, filename: st
                 target_color = IntensityRange(
                     min=target_color.min - 23, max=target_color.max
                 )
+    return target_color
 
+
+@click.command()
+@click.option(
+    "--color-range",
+    default="green",
+    help="The color range that will be recognized by the algorithm",
+)
+@click.option(
+    "--output", default="./output/", help="The output directory for processed image"
+)
+@click.option("--light-color", default=False, help="Enable the use of light color")
+@click.argument("filename")
+def color_segment(color_range: str, output: str, light_color: bool, filename: str):
+    """
+    A script that takes an image and segment it by color.
+    """
+
+    target_color = parseColorRange(color_range, light_color)
     algorithm = IdentifyColor()
     algorithm.execute(filename=filename, color_range=target_color, output_folder=output)

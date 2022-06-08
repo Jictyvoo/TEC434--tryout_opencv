@@ -1,5 +1,6 @@
 import cv2
 import numpy as np
+from cv2 import Mat
 from modules.color_segmentation.intensity_range import IntensityRange
 from providers.image_repository_provider import ImageRepositoryProvider
 from utils.generators import output_filename
@@ -13,10 +14,7 @@ class IdentifyColor(ImageRepositoryProvider):
             image,
         )
 
-    def execute(
-        self, filename: str, color_range: IntensityRange, output_folder: str
-    ) -> None:
-        image = self._image_loader.load(filename)
+    def segmentate(self, image: Mat, color_range: IntensityRange) -> None:
         frame_hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
 
         # show only the color in the range
@@ -26,6 +24,14 @@ class IdentifyColor(ImageRepositoryProvider):
 
         # show the result
         result = cv2.bitwise_and(image, image, mask=mask)
+
+        return result
+
+    def execute(
+        self, filename: str, color_range: IntensityRange, output_folder: str
+    ) -> None:
+        image = self._image_loader.load(filename)
+        result = self.segmentate(image, color_range)
 
         self.export_image(
             input_name=filename, output_folder=output_folder, image=result
