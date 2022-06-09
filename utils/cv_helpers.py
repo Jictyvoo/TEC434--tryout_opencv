@@ -1,5 +1,6 @@
 import cv2 as cv
 import numpy as np
+from models.contours import Contours
 
 
 def fill_holes(src):
@@ -8,3 +9,9 @@ def fill_holes(src):
     for index in range(len(contours)):
         cv.drawContours(dst, contours, index, 255, -1, 8, hierarchy, 0)
     return dst
+
+
+def draw_contours(image: cv.Mat, contours: Contours) -> cv.Mat:
+    # Extract image in given contours
+    contours_image = cv.drawContours(image, [contours.biggest], 0, (0, 255, 0), 3)
+    return contours_image

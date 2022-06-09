@@ -1,7 +1,7 @@
 from typing import Callable, Union
 
 import cv2
-from modules.element_contours.contours import Contours
+from models.contours import Contours
 
 
 class BiggestElementCalculator:

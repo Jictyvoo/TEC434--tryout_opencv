@@ -1,8 +1,9 @@
 from typing import Callable, Union
 
 import cv2
-from modules.element_contours.contours import Contours
+from models.contours import Contours
 from providers.image_repository_provider import ImageRepositoryProvider
+from utils.cv_helpers import draw_contours
 from utils.generators import output_filename
 
 
@@ -20,14 +21,9 @@ class ElementContourExtractor(ImageRepositoryProvider):
             image,
         )
 
-    def __draw_contours(self, image: cv2.Mat, contours: Contours) -> cv2.Mat:
-        # Extract image in given contours
-        contours_image = cv2.drawContours(image, [contours.biggest], 0, (0, 255, 0), 3)
-        return contours_image
-
     def execute(self, filename: str, output_folder: str) -> None:
         image = self._image_loader.load(filename)
 
         contours, filtered_image = self.__contour_finder(image)
-        processedImage = self.__draw_contours(filtered_image, contours)
+        processedImage = draw_contours(filtered_image, contours)
         self.export_image(filename, output_folder, processedImage)
