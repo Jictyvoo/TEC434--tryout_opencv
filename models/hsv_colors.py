@@ -1,6 +1,6 @@
 from enum import Enum
 
-from modules.color_segmentation.intensity_range import IntensityRange
+from models.intensity_range import IntensityRange
 
 
 class HSVColor:

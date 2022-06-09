@@ -1,6 +1,6 @@
 import cv2
 import numpy as np
-from modules.color_segmentation.hsv_colors import HSVColor
+from models.hsv_colors import HSVColor
 from providers.image_repository_provider import ImageRepositoryProvider
 from utils.cv_helpers import fill_holes
 from utils.generators import output_filename

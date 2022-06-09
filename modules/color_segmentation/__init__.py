@@ -1,7 +1,7 @@
 import click
-from modules.color_segmentation.hsv_colors import HSVColor, HSVColors
+from models.hsv_colors import HSVColor, HSVColors
+from models.intensity_range import IntensityRange
 from modules.color_segmentation.identify_color import IdentifyColor
-from modules.color_segmentation.intensity_range import IntensityRange
 
 
 def parseColorRange(color_range: str, light_color: bool) -> IntensityRange:
