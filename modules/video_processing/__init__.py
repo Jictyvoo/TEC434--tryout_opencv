@@ -3,8 +3,9 @@ import cv2
 from modules.color_segmentation import parseColorRange
 from modules.color_segmentation.identify_color import IdentifyColor
 from modules.element_contours.bigsmal_calculator import BigSmallElementCalculator
+from modules.object_identifier.object_identifier import ObjectIdentifier
 from modules.video_processing.video_processor import VideoProcessor
-from utils.cv_helpers import draw_contours
+from utils.cv_helpers import draw_contours, extract_from_mask
 
 
 def frame_contour_processor(
@@ -30,6 +31,7 @@ def video_processor(color_range: str, output: str, filename: str):
     """
 
     target_color = parseColorRange(color_range, False)
+    threshold = ObjectIdentifier()
     color_threshold = IdentifyColor()
 
     extractor = VideoProcessor(
@@ -37,7 +39,13 @@ def video_processor(color_range: str, output: str, filename: str):
             image_obj=image_obj,
             algorithm=BigSmallElementCalculator(
                 threshold_func=lambda image: color_threshold.segmentate(
-                    image=image, color_range=target_color
+                    image=extract_from_mask(
+                        image=image,
+                        mask=threshold.segmentate(
+                            image=cv2.cvtColor(image, cv2.COLOR_BGR2GRAY),
+                        ),
+                    ),
+                    color_range=target_color,
                 ),
                 isModeTree=False,
             ),

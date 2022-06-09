@@ -13,11 +13,9 @@ class ObjectIdentifier(ImageRepositoryProvider):
             image,
         )
 
-    def execute(self, filename: str, output_path: str):
-        loaded_image = self._image_loader.load(filename, True)
-
+    def segmentate(self, image: cv.Mat):
         # Start to apply the threshold
-        normalized_image = cv.normalize(loaded_image, None, 0, 255, cv.NORM_MINMAX)
+        normalized_image = cv.normalize(image, None, 0, 255, cv.NORM_MINMAX)
         image_with_blur = cv.GaussianBlur(normalized_image, (7, 7), 0, 0)
         image_threshold = cv.adaptiveThreshold(
             image_with_blur,
@@ -34,6 +32,12 @@ class ObjectIdentifier(ImageRepositoryProvider):
         )
 
         image_result = fill_holes(morphology_image)
+        return image_result
+
+    def execute(self, filename: str, output_path: str):
+        loaded_image = self._image_loader.load(filename, True)
+
+        image_result = self.segmentate(loaded_image)
 
         self.export_image(filename, output_path, image_result)
         return image_result
