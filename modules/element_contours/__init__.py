@@ -17,7 +17,7 @@ from modules.element_contours.element_extractor import ElementContourExtractor
 @click.option("--light-color", default=False, help="Enable the use of light color")
 @click.option("--small", default=False, help="Enable the use of smaller element")
 @click.argument("filename")
-def biggest_element(
+def element_size(
     color_range: str, output: str, light_color: bool, small: bool, filename: str
 ):
     """
