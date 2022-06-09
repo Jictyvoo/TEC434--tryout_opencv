@@ -4,7 +4,7 @@ import cv2
 from models.contours import Contours
 
 
-class BiggestElementCalculator:
+class BigSmallElementCalculator:
     def __init__(
         self, threshold_func: Callable[[cv2.Mat], cv2.Mat], isModeTree: bool
     ) -> None:

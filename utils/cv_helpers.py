@@ -11,7 +11,12 @@ def fill_holes(src):
     return dst
 
 
-def draw_contours(image: cv.Mat, contours: Contours) -> cv.Mat:
+def draw_contours(image: cv.Mat, contours: Contours, is_small: bool = False) -> cv.Mat:
     # Extract image in given contours
-    contours_image = cv.drawContours(image, [contours.biggest], 0, (0, 255, 0), 3)
+    contour_arr = []
+    if is_small:
+        contour_arr = contours.smallest
+    else:
+        contour_arr = contours.biggest
+    contours_image = cv.drawContours(image, [contour_arr], 0, (0, 255, 0), 3)
     return contours_image

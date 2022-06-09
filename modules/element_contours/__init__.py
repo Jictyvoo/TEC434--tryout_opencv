@@ -1,7 +1,7 @@
 import click
 from modules.color_segmentation import parseColorRange
 from modules.color_segmentation.identify_color import IdentifyColor
-from modules.element_contours.biggest_calculator import BiggestElementCalculator
+from modules.element_contours.bigsmal_calculator import BigSmallElementCalculator
 from modules.element_contours.element_extractor import ElementContourExtractor
 
 
@@ -15,15 +15,18 @@ from modules.element_contours.element_extractor import ElementContourExtractor
     "--output", default="./output/", help="The output directory for processed image"
 )
 @click.option("--light-color", default=False, help="Enable the use of light color")
+@click.option("--small", default=False, help="Enable the use of smaller element")
 @click.argument("filename")
-def biggest_element(color_range: str, output: str, light_color: bool, filename: str):
+def biggest_element(
+    color_range: str, output: str, light_color: bool, small: bool, filename: str
+):
     """
     A script that takes an image and identify the biggest element by color.
     """
 
     target_color = parseColorRange(color_range, light_color)
     color_threshold = IdentifyColor()
-    algorithm = BiggestElementCalculator(
+    algorithm = BigSmallElementCalculator(
         threshold_func=lambda image: color_threshold.segmentate(
             image=image, color_range=target_color
         ),
@@ -32,7 +35,8 @@ def biggest_element(color_range: str, output: str, light_color: bool, filename: 
 
     extractor = ElementContourExtractor(
         contour_finder=lambda image_obj: algorithm.execute(
-            image=image_obj, is_sorted=True
+            image=image_obj,
+            is_sorted=True,
         )
     )
-    extractor.execute(filename, output_folder=output)
+    extractor.execute(filename, output_folder=output, is_small=small)

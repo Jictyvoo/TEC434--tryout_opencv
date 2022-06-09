@@ -21,9 +21,11 @@ class ElementContourExtractor(ImageRepositoryProvider):
             image,
         )
 
-    def execute(self, filename: str, output_folder: str) -> None:
+    def execute(
+        self, filename: str, output_folder: str, is_small: bool = False
+    ) -> None:
         image = self._image_loader.load(filename)
 
         contours, filtered_image = self.__contour_finder(image)
-        processedImage = draw_contours(filtered_image, contours)
+        processedImage = draw_contours(filtered_image, contours, is_small=is_small)
         self.export_image(filename, output_folder, processedImage)

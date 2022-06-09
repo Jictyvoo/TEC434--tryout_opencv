@@ -6,6 +6,7 @@ from modules.ground_truth import calculate_gt
 from modules.morphology import morph_op
 from modules.object_identifier import segment_image
 from modules.remove_noise import remove_noise
+from modules.video_processing import video_processor
 
 """A tuple that contains all cli functions for every module"""
 MODULES_CLI: Final = [
@@ -15,4 +16,5 @@ MODULES_CLI: Final = [
     morph_op,
     color_segment,
     biggest_element,
+    video_processor,
 ]

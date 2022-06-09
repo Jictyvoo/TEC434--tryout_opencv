@@ -2,13 +2,13 @@ import click
 import cv2
 from modules.color_segmentation import parseColorRange
 from modules.color_segmentation.identify_color import IdentifyColor
-from modules.element_contours.biggest_calculator import BiggestElementCalculator
+from modules.element_contours.bigsmal_calculator import BigSmallElementCalculator
 from modules.video_processing.video_processor import VideoProcessor
 from utils.cv_helpers import draw_contours
 
 
 def frame_contour_processor(
-    algorithm: BiggestElementCalculator, image_obj: cv2.Mat
+    algorithm: BigSmallElementCalculator, image_obj: cv2.Mat
 ) -> cv2.Mat:
     contours, frame = algorithm.execute(image=image_obj, is_sorted=True)
     return draw_contours(frame, contours)
@@ -35,7 +35,7 @@ def video_processor(color_range: str, output: str, filename: str):
     extractor = VideoProcessor(
         frame_processor=lambda image_obj: frame_contour_processor(
             image_obj=image_obj,
-            algorithm=BiggestElementCalculator(
+            algorithm=BigSmallElementCalculator(
                 threshold_func=lambda image: color_threshold.segmentate(
                     image=image, color_range=target_color
                 ),
