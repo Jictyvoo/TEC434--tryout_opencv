@@ -26,8 +26,9 @@ class HSVColor:
 
 class HSVColors(Enum):
     RED = HSVColor(h=(0, 29), s=(0, 255), v=(0, 255))
-    YELLOW = HSVColor(h=(30, 59), s=(69, 147), v=(189, 221))
+    WHITE = HSVColor(h=(17, 36), s=(0, 255), v=(193, 255))
     LIGHT_YELLOW = HSVColor(h=(17, 32), s=(69, 189), v=(147, 221))
+    YELLOW = HSVColor(h=(30, 59), s=(69, 147), v=(189, 221))
     GREEN = HSVColor(h=(60, 89), s=(25, 255), v=(55, 255))
     CYAN = HSVColor(h=(90, 119), s=(0, 255), v=(0, 255))
     BLUE = HSVColor(h=(120, 149), s=(0, 255), v=(0, 255))
@@ -49,4 +50,4 @@ class HSVColors(Enum):
                 return HSVColors.BLUE
             case "MAGENTA":
                 return HSVColors.MAGENTA
-        return None
+        return HSVColors.WHITE
